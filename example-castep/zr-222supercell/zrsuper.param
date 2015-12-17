@@ -1,26 +1,18 @@
-task : geometryoptimisation
-cut_off_energy : 400 eV
-#!finite_basis_corr : 2
+task : geometryoptimisation # sets the task - can be singlepoint or moleculardynamics
+cut_off_energy : 400 eV # converged cut-off energy
+#!finite_basis_corr : 2 # can be used to vary the cut-off energy by using steps of 10 up to 150 steps in energy from your original input energy
 #!finite_basis_npoints : 150
 #!finite_basis_spacing : 10
-xc_functional : PBE
-fix_occupancy : FALSE
-calculate_stress : true
+xc_functional : PBE # fixs the input funcitonal that describes the interaction between your atoms. I have chosen PBE for my metal system. 
+fix_occupancy : FALSE # this is chosen since it is a metal, if true would be for a semi-conductor
+calculate_stress : true 
 opt_strategy : speed
 grid_scale 1.75
-elec_method: dm
+elec_method: dm 
 mixing_scheme: Pulay
-#elec_energy_tol:1E-8 eV
+#elec_energy_tol:1E-8 eV # can determine the quality of your result
 elec_force_tol : 0.001
 nextra_bands : 53
 
-#finite_basis_spacing: 30
-#finite_basis_corr : 2
-#xc_functional : PBE 
-#metals_method : dm
-#max_scf_cycles : 100
-#fix_occupancy : FALSE
 
-#elec_energy_tol : 1e-8 eV 
-#force_tol : 0.01 
-#fix_occupancy : false
+
