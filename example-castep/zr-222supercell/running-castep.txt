@@ -1,0 +1,31 @@
+The zrsuper.cell and zrsuper.param are both input files to run a geometry optimisation for Zr 222 super 
+cell. 
+The .cell file just contains what the lattice constants are, for your input element, and the fractional 
+coordinates of where the atoms, in the super cell, lie with relation to the lattice parameter.
+The .param file decides how the simulation will run. 
+There isn't that much documentation about castep, but there are some good starting points at:
+http://www.castep.org/CASTEP/OnlineTutorials
+http://www.tcm.phy.cam.ac.uk/castep/Geom_Opt/GEOM_OPT.html
+
+The geometry optimisation is normally run to reach the most suitable geometry once it has been relaxed. 
+However, to makesure that you are getting reasonable data, the input must first be converged. 
+This is to determine that you are using a reasonable cut off energy for your system and a good enough 
+sampling system of k-points, so that you reach a minimized plateau, i.e. that the result you are outputting 
+does not change drastically with a change in k-point and cut off energy. 
+
+To test the if your system in converged, the cut off energy should be varied from e.g. 200eV to 1400eV. 
+Running a single point calculation, plot the total energy of the system against the cut off energy. The 
+energy at which the total energy reaches a plateau should be used as the converged cut-off energy. The 
+cut-off energy convergence is normally run using a small k-point sampling such as kpoint gird of 111 to 
+save computational cost. 
+The same should be run but with a low cut-off energy (100eV) and vary the kpoint grid. 
+Again, by plotting the total energy against the number of k-points, an optimum number of sampling points is 
+used for the converged system. 
+
+These two inputs should be used for the geometry optimisation or any other simulation. 
+If the system has changed, such as increasing the supercell size, the convergence will have to be run 
+again, as a smaller number of kpoints might be more efficient in your calculation. 
+
+Luckily a convergence program has been developed, which can be run for a chosen number of k-points and 
+cut-off energy, without having to generate several input files yourself. 
+https://ccpforge.cse.rl.ac.uk/gf/project/castepconv/frs/?action=FrsReleaseView&release_id=359 
