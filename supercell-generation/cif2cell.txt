@@ -1,0 +1,18 @@
+Cif2cell is a useful code that is easy to download from the internet.
+It can take the output from databases, like crystalworks, for a specific 
+element or alloy, and produce the equivalent data for unit cells as 
+input for prorgams like CASTEP and VASP. 
+The supercell can easily be output as well.
+
+I have included the a simple cif output from crystalworks for alpha 
+zirconium. 
+After downloading the folder of cif2cell from 
+:http://sourceforge.net/projects/cif2cell/ copy the crystalworks file 
+into the cif2cell folder and run:
+./cif2cell icsd_53785.cif 
+--no-reduce --supercell=[3,3,3] --program=castep -o 
+zr-supercell.out
+This can be changed for vasp and you can ignore the supercell entry if a 
+basic unit cell is needed. 
+
+

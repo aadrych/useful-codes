@@ -1,0 +1,66 @@
+#####################################################################
+#
+# Data is provided by the Chemical Database Service
+# Database specific disclaimer will appear here......
+#
+#####################################################################
+data_53785-ICSD
+_journal_volume 18
+_journal_page_first 88
+_journal_name_full 'Physical Review'
+_journal_year 1921
+loop_
+_publ_author_name
+CSDAUTH
+_chemical_formula_moiety
+;
+Zr
+;
+_chemical_name_systematic
+;
+Zirconium
+;
+_cell_length_a     3.230
+_cell_length_b     3.230
+_cell_length_c     5.140
+_cell_angle_alpha    90.000
+_cell_angle_beta    90.000
+_cell_angle_gamma   120.000
+_symmetry_Int_tables_number 194
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+  1 X,Y,Z
+  2 X-Y,-Y,-Z
+  3 X-Y,-Y,1/2+Z
+  4 -Y,X-Y,1/2-Z
+  5 -Y,X-Y,Z
+  6 X,X-Y,1/2-Z
+  7 X,X-Y,Z
+  8 X-Y,X,-Z
+  9 X-Y,X,1/2+Z
+ 10 Y,X,-Z
+ 11 Y,X,1/2+Z
+ 12 X,Y,1/2-Z
+ 13 -X,-Y,-Z
+ 14 -X+Y,Y,Z
+ 15 -X+Y,Y,1/2-Z
+ 16 Y,-X+Y,1/2+Z
+ 17 Y,-X+Y,-Z
+ 18 -X,-X+Y,1/2+Z
+ 19 -X,-X+Y,-Z
+ 20 -X+Y,-X,Z
+ 21 -X+Y,-X,1/2-Z
+ 22 -Y,-X,Z
+ 23 -Y,-X,1/2-Z
+ 24 -X,-Y,1/2+Z
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_occupancy
+Zr1   ZR   2   0.33333   0.66667   0.25000   0.05000   1.00000

@@ -1,0 +1,32 @@
+I am currently working on an Nudged elastic band calculation in lammps 
+to try and approximate what the displacement threshold energy might be for a bcc iron lattice. 
+
+The python script Buildjobs.py is used to make several folders, filled 
+with the necessary input files, for a lammps simulation caluclating neb 
+for the iron system. It takes a base input script called in.base, that 
+sets up my lammps simualtion, along with my starting and end 
+coordinates, that I think the system will look like with a PKA 
+interaction.
+It also outputs a file called joblist.txt.  This is a list that is read 
+by the file fixedz.sh. 
+The fixedz.sh is an submission script to the csf. 
+It will run the lammps simulations for all the different folders, using 
+the joblist.txt file to find which folders are of interest. 
+
+There is alot of output from the lammps simulation because it has to be 
+run using a partition on a computer processor.  This means that the neb 
+calucaltion is run in parrallel and simultaneously to try and predict 
+how the energy changes as an atom moves from my input starting 
+coordinates, to my final atom coordinates.
+  
+Running the run1.py script extracts what the barrier energy is from the 
+neb output. It runs the bash scipt GetResults.sh, which extract 
+what the reaction coordiates and the associated energy of the system 
+along this path. 
+The python script then calls the application gnuplot to plot the 
+results, and saves it to a png file.
+To run gnuplot from python, the gnuplot.py folders should be downloaded and installed, as described in :
+http://gnuplot-py.sourceforge.net/
+ 
+I have also included a matlab script which plot the coordinates for the final atom position so that you can see how I have moved the atom
+

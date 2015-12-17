@@ -1,0 +1,85 @@
+
+#---------------------------------------------------------------------------------------------------
+# Initilise important features of simulation
+#---------------------------------------------------------------------------------------------------
+units 		metal			# Use metals units (Ang, ps, eV, Pa, etc.)
+dimension 	3				# Run the simulation in three dimensions
+boundary 	p p p			# Use periodic boundaries in all three dimensions
+atom_style 	atomic			# Simulate "atomic" particles, i.e. point masses
+
+atom_modify map array		# Control way Lammps indexes atoms suitable for NEB simulation
+atom_modify sort 0 0.0
+variable    u uloop 100	
+
+#---------------------------------------------------------------------------------------------------
+# Set up a box of atoms
+#---------------------------------------------------------------------------------------------------
+read_data coords.lmps							# Read in atom coordinates from a file
+
+group 		PKA id 188 63							# Identify added atom
+#group mobile block 2 3 2 3 2 3 units lattice
+#group nonneb subtract all mobile
+region 2 block INF INF INF INF INF 1.0 units lattice
+region 3 block INF INF INF INF 13.0 INF units lattice
+region 4 block INF INF INF 1.0 INF INF units lattice
+region 5 block INF INF 13.0 INF INF INF units lattice
+region 6 block INF 1.0 INF INF INF INF units lattice
+region 7 block 13.0 INF INF INF INF INF units lattice
+group nonneb1 region 2
+group nonneb2 region 3
+group nonneb3 region 4
+group nonneb4 region 5
+group nonneb5 region 6
+group nonneb6 region 7
+group nonneb union nonneb1 nonneb2 nonneb3 nonneb4 nonneb5 nonneb6
+#group none union nonneb1 nonneb2
+
+group rest subtract all PKA
+
+#---------------------------------------------------------------------------------------------------
+# Define how the forces between the atoms will be modelled
+#---------------------------------------------------------------------------------------------------
+pair_style 	eam/fs						# Define the type of potential to be used (here an EAM type)
+pair_coeff 	* * Fe.eam.fs Fe			# Read in the potential definition and assign to all atoms
+#neighbor     0.2 bin
+neigh_modify     delay 0 every 10 check yes
+#---------------------------------------------------------------------------------------------------
+# Specify what information to write out
+#---------------------------------------------------------------------------------------------------
+#dump 1 all custom 10000 dump.*.$u id x y z  # Write out atom positions
+thermo_style custom step etotal pxx pyy pzz lx ly lz	# Variables to write out
+thermo_modify format 2 %20.12f							# Print total energy to 10 decimal places
+thermo 1
+compute 1 all temp # compute ID(1) group ID(all) style(temp) args
+
+#compute 2 all coord/atom 4 # compute ID(2) group-ID (interior) coord/atom cutoff(4)
+
+compute 3 all ke/atom # computes translation kinetic energy per atom
+
+compute 4 all voronoi/atom occupation # computes defects positions
+compute 5 all pe/atom #computes potential energy 
+
+
+#---------------------------------------------------------------------------------------------------
+# Define and run the NEB calculation
+#---------------------------------------------------------------------------------------------------
+min_style cg
+minimize 1e-4 1e-6 1000 10000
+#min_style cg
+
+#fix 3 all box/relax iso
+#dump 1 all custom 1 dump.PKA_1_traj_init_col.* id x y z c_3 c_4[1] c_4[2] c_5
+dump 3 all custom 1 dump.PKA_2_traj_init_col.$u id x y z c_3 c_4[1] c_4[2] c_5
+reset_timestep 0
+#fix 2 rest setforce 0.0 0.0 0.0							# Fix positions of a block of atoms
+
+fix 2 nonneb setforce 0.0 0.0 0.0
+fix		1 PKA neb 1.0 									# Set up and #run NEB simulation
+
+thermo 100
+timestep 0.01
+min_style quickmin
+
+neb 		0 1e-6 10000 10000 10 final pka188-min-INPUT.final
+dump 2 all custom 100 dump.PKA_1_traj_final_col.$u  id x y z c_3 c_4[1] c_4[2] c_5
+#run 100
