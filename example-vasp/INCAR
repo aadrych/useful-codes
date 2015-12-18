@@ -1,0 +1,11 @@
+    System = fcc Fe
+    PREC = Accurate
+    ISTART = 0 ; ICHARG = 2
+    IBRION=1 # conj. grad relaxation
+    NSW=191	
+    ISIF = 3
+    EDIFF = 0.1E-4 
+    EDIFFG = -0.001 #forces ev/ang
+    ENCUT = 402 # 1.5*ENMAX in POTCAR (grep ENMAX POTCAR)
+    ISMEAR = 1 # for metal relaxations
+    SIGMA = 0.1  smearing width in eV
